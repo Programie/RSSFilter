@@ -1,0 +1,16 @@
+{
+  "name": "programie/rss-filter",
+  "description": "A simple proxy allowing to filter RSS feeds",
+  "type": "project",
+  "require": {
+    "php": "^8.0",
+    "guzzlehttp/guzzle": "^7.4"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michael Wieland",
+      "email": "git@selfcoders.com"
+    }
+  ]
+}
