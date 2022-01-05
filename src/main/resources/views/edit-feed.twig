@@ -1,0 +1,49 @@
+{% extends "page.twig" %}
+
+{% block content %}
+    <h1>{% if editFeed %}Edit feed{% else %}Add feed{% endif %}</h1>
+
+    <form method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Unique name</label>
+            <div class="input-group">
+                <input type="text" class="{{ html_classes("form-control", {"is-invalid": ("name" in errors)}) }}" id="name" name="name" value="{{ feed.name }}" required/>
+                {% if "name-empty" in errors %}
+                    <div class="invalid-feedback">
+                        Please provide a name for the feed.
+                    </div>
+                {% endif %}
+                {% if "invalid-name" in errors %}
+                    <div class="invalid-feedback">
+                        The provided name is invalid. Allowed characters: <b>a-z, A-Z, _, -</b>
+                    </div>
+                {% endif %}
+                {% if "duplicate-name" in errors %}
+                    <div class="invalid-feedback">
+                        Another feed with the same name already exists.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="url" class="form-label">Feed URL</label>
+            <div class="input-group">
+                <input type="url" class="{{ html_classes("form-control", {"is-invalid": ("url" in errors)}) }}" id="url" name="url" value="{{ feed.url }}" required/>
+                {% if "url-empty" in errors %}
+                    <div class="invalid-feedback">
+                        Please provide the URL of the feed.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="filters" class="form-label">Filters (one per line)</label>
+            <textarea class="form-control" rows="15" id="filters" name="filters">{{ feed.filters|join("\n") }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="/" class="btn btn-danger">Cancel</a>
+    </form>
+{% endblock %}

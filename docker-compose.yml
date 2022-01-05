@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    image: registry.gitlab.com/programie/rssfilter
+    build: .
+    ports:
+      - '8080:80'
+    links:
+      - mysql
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_NAME: rssfilter
+      DATABASE_USERNAME: rssfilter
+      DATABASE_PASSWORD: rssfilter
+
+  mysql:
+    image: mariadb
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/db.sql:ro
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: rssfilter
+      MYSQL_USER: rssfilter
+      MYSQL_PASSWORD: rssfilter

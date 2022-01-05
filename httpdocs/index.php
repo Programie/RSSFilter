@@ -1,78 +1,45 @@
 <?php
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\RequestOptions;
+use com\selfcoders\rssfilter\Controller;
+use com\selfcoders\rssfilter\exception\NotFoundException;
+use com\selfcoders\rssfilter\TwigRenderer;
+use Symfony\Component\Asset\Package;
+use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
-require_once __DIR__ . "/../vendor/autoload.php";
+require_once __DIR__ . "/../bootstrap.php";
 
-$url = $_GET["url"] ?? null;
-$filter = $_GET["filter"] ?? "";
+$router = new AltoRouter;
 
-if ($url === null or $url === "") {
-    http_response_code(400);
-    echo "URL missing!";
-    exit;
-}
+$router->map("GET", "/", "getPage");
+$router->map("GET", "/add-feed", "editFeed");
+$router->map("POST", "/add-feed", "saveFeed");
+$router->map("GET", "/feeds/[:name]/edit", "editFeed");
+$router->map("POST", "/feeds/[:name]/edit", "saveFeed");
+$router->map("GET", "/feeds/[:name]", "getFeed");
+$router->map("DELETE", "/feeds/[:name]", "removeFeed");
 
-if (!is_array($filter)) {
-    $filter = [$filter];
-}
+$match = $router->match();
 
-$client = new Client([
-    RequestOptions::TIMEOUT => 5,
-    RequestOptions::ALLOW_REDIRECTS => true,
-]);
+$assetsPackage = new Package(new JsonManifestVersionStrategy(APP_ROOT . "/webpack.assets.json"));
+
+TwigRenderer::init($assetsPackage);
 
 try {
-    $response = $client->get($url);
-} catch (GuzzleException $exception) {
-    http_response_code(500);
-    echo $exception->getMessage();
-    exit;
-}
+    if ($match === false) {
+        throw new NotFoundException;
+    } else {
+        $target = $match["target"];
 
-$responseCode = $response->getStatusCode();
-$body = $response->getBody()->getContents();
+        $controller = new Controller;
+        $result = $controller->{$target}($match["params"]);
 
-http_response_code($responseCode);
-
-if ($responseCode === 200) {
-    $document = new DOMDocument;
-    $document->loadXML($body);
-
-    $rootElement = $document->documentElement;
-
-    /**
-     * @var $entryElement DOMElement
-     */
-    foreach ($rootElement->getElementsByTagName("entry") as $entryElement) {
-        if ($entryElement->parentNode !== $rootElement) {
-            continue;
+        if (is_array($result) or is_object($result)) {
+            header("Content-Type: application/json");
+            echo json_encode($result);
+        } else {
+            echo $result;
         }
-
-        $title = $entryElement->getElementsByTagName("title")?->item(0)?->textContent ?? null;
-
-        if ($title === null or $title === "") {
-            continue;
-        }
-
-        $filtered = false;
-
-        foreach ($filter as $filterString) {
-            if (stripos($title, $filterString) !== false) {
-                $filtered = true;
-                break;
-            }
-        }
-
-        if (!$filtered) {
-            continue;
-        }
-
-        $rootElement->removeChild($entryElement);
     }
-
-    echo $document->saveXML($document);
-} else {
-    echo $body;
+} catch (NotFoundException) {
+    http_response_code(404);
+    echo TwigRenderer::render("error-404");
 }
