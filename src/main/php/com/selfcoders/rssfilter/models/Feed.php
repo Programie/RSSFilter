@@ -68,7 +68,7 @@ class Feed
         return $this;
     }
 
-    public function requestAndFilter(): string
+    public function requestAndFilter(bool $addHeaders = false): string
     {
         $feedFilter = new FeedFilter;
 
@@ -76,7 +76,15 @@ class Feed
             $feedFilter->addFilter($filter);
         }
 
-        return $feedFilter->filterUrl($this->getUrl());
+        $feedContent = $feedFilter->filterUrl($this->getUrl());
+
+        if ($addHeaders) {
+            foreach ($feedFilter->getHeaders() as $name => $value) {
+                header(sprintf("%s: %s", $name, implode(", ", $value)));
+            }
+        }
+
+        return $feedContent;
     }
 
     private static function filterArray(array $array): array

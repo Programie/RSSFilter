@@ -121,6 +121,6 @@ class Controller
             throw new NotFoundException;
         }
 
-        return $feed->requestAndFilter();
+        return $feed->requestAndFilter(addHeaders: true);
     }
 }

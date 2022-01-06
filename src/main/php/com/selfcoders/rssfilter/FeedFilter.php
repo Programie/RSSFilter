@@ -5,10 +5,12 @@ use DOMDocument;
 use DOMElement;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 
 class FeedFilter
 {
     private array $filterStrings = [];
+    private ResponseInterface $response;
 
     public function addFilter(string $filterString): void
     {
@@ -22,9 +24,9 @@ class FeedFilter
             RequestOptions::ALLOW_REDIRECTS => true,
         ]);
 
-        $response = $client->get($url);
+        $this->response = $client->get($url);
 
-        return $this->filterContent($response->getBody()->getContents());
+        return $this->filterContent($this->response->getBody()->getContents());
     }
 
     public function filterContent(string $content): string
@@ -77,5 +79,10 @@ class FeedFilter
         }
 
         return false;
+    }
+
+    public function getHeaders(): array
+    {
+        return $this->response->getHeaders();
     }
 }
