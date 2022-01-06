@@ -41,5 +41,7 @@ try {
     }
 } catch (NotFoundException) {
     http_response_code(404);
-    echo TwigRenderer::render("error-404");
+    echo TwigRenderer::render("error-404", [
+        "url" => $_SERVER["REQUEST_URI"]
+    ]);
 }
