@@ -34,6 +34,8 @@ class FeedFilter
 
         $rootElement = $document->documentElement;
 
+        $elementsToRemove = [];
+
         /**
          * @var $entryElement DOMElement
          */
@@ -52,7 +54,11 @@ class FeedFilter
                 continue;
             }
 
-            $rootElement->removeChild($entryElement);
+            $elementsToRemove[] = $entryElement;
+        }
+
+        foreach ($elementsToRemove as $element) {
+            $element->parentNode->removeChild($element);
         }
 
         return $document->saveXML($document);
