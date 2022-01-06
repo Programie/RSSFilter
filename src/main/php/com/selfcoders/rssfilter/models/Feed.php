@@ -79,15 +79,14 @@ class Feed
         $feedContent = $feedFilter->filterUrl($this->getUrl());
 
         if ($addHeaders) {
-            $headers = $feedFilter->getHeaders();
             $headersToKeep = ["Content-Type", "Last-Modified", "Cache-Control", "Age"];
 
             foreach ($headersToKeep as $name) {
-                $headerValue = $headers[strtolower($name)] ?? null;
-
-                if ($headerValue !== null) {
-                    header(sprintf("%s: %s", $name, implode(", ", $headerValue)));
+                if (!$feedFilter->hasHeader($name)) {
+                    continue;
                 }
+
+                header(sprintf("%s: %s", $name, $feedFilter->getHeaderLine($name)));
             }
         }
 

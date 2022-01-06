@@ -81,8 +81,13 @@ class FeedFilter
         return false;
     }
 
-    public function getHeaders(): array
+    public function hasHeader(string $name): bool
     {
-        return $this->response->getHeaders();
+        return $this->response->hasHeader($name);
+    }
+
+    public function getHeaderLine(string $name): string
+    {
+        return $this->response->getHeaderLine($name);
     }
 }
