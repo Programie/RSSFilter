@@ -106,8 +106,6 @@ class Controller
             $entityManager->remove($feed);
             $entityManager->flush();
         }
-
-        header("Location: /", response_code: 302);
     }
 
     public function getFeed(array $params)

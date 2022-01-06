@@ -38,4 +38,24 @@ window.onload = function () {
             });
         });
     }
+
+    let removeFeedModalConfirm = document.querySelector("#remove-feed-modal-confirm");
+    if (removeFeedModalConfirm !== null) {
+        removeFeedModalConfirm.addEventListener("click", function () {
+            let ajax = new XMLHttpRequest();
+            ajax.onreadystatechange = function () {
+                if (this.readyState !== 4) {
+                    return;
+                }
+
+                if (this.status === 200) {
+                    document.location.reload();
+                } else {
+                    alert("Delete request failed with error code " + this.status);
+                }
+            };
+            ajax.open("DELETE", "/feeds/" + document.querySelector(".remove-feed-modal-feed").textContent);
+            ajax.send();
+        });
+    }
 };
