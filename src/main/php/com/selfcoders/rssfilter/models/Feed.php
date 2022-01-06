@@ -58,12 +58,12 @@ class Feed
 
     public function getFilters(): array
     {
-        return array_unique(array_filter(explode("\n", $this->filters)));
+        return self::filterArray(explode("\n", $this->filters));
     }
 
     public function setFilters(array $filters): self
     {
-        $this->filters = implode("\n", array_unique(array_filter($filters)));
+        $this->filters = implode("\n", self::filterArray($filters));
 
         return $this;
     }
@@ -77,5 +77,10 @@ class Feed
         }
 
         return $feedFilter->filterUrl($this->getUrl());
+    }
+
+    private static function filterArray(array $array): array
+    {
+        return array_unique(array_filter(array_map("trim", $array)));
     }
 }
