@@ -89,6 +89,8 @@ class Controller
         $feed->setUrl($url);
         $feed->setFilters($filters);
 
+        $feed->requestAndFilter();// Retrieve feed to update title
+
         $entityManager->persist($feed);
         $entityManager->flush();
 

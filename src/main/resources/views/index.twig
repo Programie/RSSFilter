@@ -5,7 +5,9 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Title</th>
                 <th>URL</th>
+                <th>Filters</th>
                 <th></th>
             </tr>
         </thead>
@@ -14,7 +16,9 @@
             {% for feed in feeds %}
                 <tr class="feed-row" data-name="{{ feed.name }}">
                     <td>{{ feed.name }}</td>
+                    <td>{{ feed.title }}</td>
                     <td>{{ feed.url }}</td>
+                    <td>{{ feed.filters|length }}</td>
                     <th>
                         <div class="btn-group btn-group-sm">
                             <button class="btn btn-primary show-url" data-bs-toggle="modal" data-bs-target="#show-url-modal" title="Show URL of feed"><i class="fas fa-globe"></i></button>
@@ -25,7 +29,7 @@
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="3">No feeds added yet.</td>
+                    <td colspan="5">No feeds added yet.</td>
                 </tr>
             {% endfor %}
         </tbody>

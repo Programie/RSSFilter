@@ -25,6 +25,11 @@ class Feed
     /**
      * @ORM\Column(type="string")
      */
+    private string $title;
+
+    /**
+     * @ORM\Column(type="string")
+     */
     private string $url;
 
     /**
@@ -40,6 +45,18 @@ class Feed
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
@@ -77,6 +94,8 @@ class Feed
         }
 
         $feedContent = $feedFilter->filterUrl($this->getUrl());
+
+        $this->setTitle($feedFilter->getTitle());
 
         if ($addHeaders) {
             $headersToKeep = ["Content-Type", "Last-Modified", "Cache-Control", "Age"];

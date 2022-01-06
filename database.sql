@@ -2,6 +2,7 @@ CREATE TABLE `feeds`
 (
     `id`      int(11) NOT NULL AUTO_INCREMENT,
     `name`    varchar(100)  NOT NULL,
+    `title`   varchar(200)  NOT NULL DEFAULT '',
     `url`     varchar(1000) NOT NULL,
     `filters` text,
     PRIMARY KEY (`id`),

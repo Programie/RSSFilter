@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 class FeedFilter
 {
     private array $filterStrings = [];
+    private string $title;
     private ResponseInterface $response;
 
     public function addFilter(string $filterString): void
@@ -34,9 +35,14 @@ class FeedFilter
         $document = new DOMDocument;
         $document->loadXML($content);
 
+        /**
+         * @var $rootElement DOMElement
+         */
         $rootElement = $document->documentElement;
 
         $elementsToRemove = [];
+
+        $this->title = $rootElement->getElementsByTagName("title")?->item(0)?->textContent ?? "";
 
         /**
          * @var $entryElement DOMElement
@@ -79,6 +85,11 @@ class FeedFilter
         }
 
         return false;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 
     public function hasHeader(string $name): bool
