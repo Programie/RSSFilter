@@ -51,7 +51,7 @@ class Controller
             $errors[] = "name";
             $errors[] = "name-empty";
         } else {
-            if (!preg_match("/^([a-zA-Z_-]+)$/", $name)) {
+            if (!preg_match("/^([a-zA-Z._-]+)$/", $name)) {
                 $errors[] = "name";
                 $errors[] = "invalid-name";
             } else {
