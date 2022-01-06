@@ -67,7 +67,11 @@ class FeedFilter
     private function isFiltered(string $string): bool
     {
         foreach ($this->filterStrings as $filterString) {
-            if (stripos($string, $filterString) !== false) {
+            if (str_starts_with($filterString, "/") and str_ends_with($filterString, "/")) {
+                if (preg_match($filterString, $string)) {
+                    return true;
+                }
+            } elseif (stripos($string, $filterString) !== false) {
                 return true;
             }
         }
