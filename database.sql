@@ -1,5 +1,3 @@
-SET FOREIGN_KEY_CHECKS = 0;
-
 CREATE TABLE `feeds`
 (
     `id`      int(11) NOT NULL AUTO_INCREMENT,
