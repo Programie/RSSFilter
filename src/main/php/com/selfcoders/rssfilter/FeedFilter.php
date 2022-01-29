@@ -52,9 +52,9 @@ class FeedFilter
                 continue;
             }
 
-            $title = $entryElement->getElementsByTagName("title")?->item(0)?->textContent ?? null;
+            $title = trim($entryElement->getElementsByTagName("title")?->item(0)?->textContent ?? "");
 
-            if ($title === null or $title === "") {
+            if ($title === "") {
                 continue;
             }
 
