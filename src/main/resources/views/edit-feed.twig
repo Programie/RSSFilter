@@ -43,6 +43,13 @@
             <textarea class="form-control" rows="15" id="filters" name="filters">{{ feed.filters|join("\n") }}</textarea>
         </div>
 
+        <div class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="filter-is-whitelist" name="filterIsWhitelist" value="1" {% if feed.isFilterWhitelist %}checked{% endif %}/>
+                <label class="form-check-label" for="filter-is-whitelist">Filter is whitelist (instead of blacklist)</label>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
         <a href="/" class="btn btn-danger"><i class="fas fa-window-close"></i> Cancel</a>
     </form>

@@ -36,6 +36,10 @@ class Feed
      * @ORM\Column(type="string")
      */
     private string $filters;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $filterIsWhitelist;
 
     public function getName(): string
     {
@@ -85,9 +89,23 @@ class Feed
         return $this;
     }
 
+    public function isFilterWhitelist(): bool
+    {
+        return $this->filterIsWhitelist;
+    }
+
+    public function setFilterIsWhitelist(bool $filterIsWhitelist): self
+    {
+        $this->filterIsWhitelist = $filterIsWhitelist;
+
+        return $this;
+    }
+
     public function requestAndFilter(bool $addHeaders = false): string
     {
         $feedFilter = new FeedFilter;
+
+        $feedFilter->setFilterIsWhitelist($this->isFilterWhitelist());
 
         foreach ($this->getFilters() as $filter) {
             $feedFilter->addFilter($filter);

@@ -9,9 +9,15 @@ use Psr\Http\Message\ResponseInterface;
 
 class FeedFilter
 {
+    private bool $filterIsWhitelist = false;
     private array $filterStrings = [];
     private string $title;
     private ResponseInterface $response;
+
+    public function setFilterIsWhitelist(bool $filterIsWhitelist): void
+    {
+        $this->filterIsWhitelist = $filterIsWhitelist;
+    }
 
     public function addFilter(string $filterString): void
     {
@@ -54,15 +60,9 @@ class FeedFilter
 
             $title = trim($entryElement->getElementsByTagName("title")?->item(0)?->textContent ?? "");
 
-            if ($title === "") {
-                continue;
+            if ($title === "" or !$this->includeInFeed($title)) {
+                $elementsToRemove[] = $entryElement;
             }
-
-            if (!$this->isFiltered($title)) {
-                continue;
-            }
-
-            $elementsToRemove[] = $entryElement;
         }
 
         foreach ($elementsToRemove as $element) {
@@ -72,7 +72,25 @@ class FeedFilter
         return $document->saveXML($document);
     }
 
-    private function isFiltered(string $string): bool
+    private function includeInFeed(string $string): bool
+    {
+        $match = $this->checkFilterMatch($string);
+
+        // Filter is in whitelist mode and string matches a filter
+        if ($this->filterIsWhitelist and $match) {
+            return true;
+        }
+
+        // Filter is in blacklist mode and string does not match a filter
+        if (!$this->filterIsWhitelist and !$match) {
+            return true;
+        }
+
+        // Do not include in feed
+        return false;
+    }
+
+    private function checkFilterMatch(string $string): bool
     {
         foreach ($this->filterStrings as $filterString) {
             if (str_starts_with($filterString, "/") and str_ends_with($filterString, "/")) {

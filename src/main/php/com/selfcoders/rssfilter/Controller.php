@@ -46,6 +46,7 @@ class Controller
         $name = trim($_POST["name"] ?? "");
         $url = trim($_POST["url"] ?? "");
         $filters = explode("\n", $_POST["filters"] ?? "");
+        $filterIsWhitelist = trim($_POST["filterIsWhitelist"] ?? "");
 
         if ($name === "") {
             $errors[] = "name";
@@ -88,6 +89,12 @@ class Controller
         $feed->setName($name);
         $feed->setUrl($url);
         $feed->setFilters($filters);
+
+        if (in_array(strtolower($filterIsWhitelist), ["1", "true"])) {
+            $feed->setFilterIsWhitelist(true);
+        } else {
+            $feed->setFilterIsWhitelist(false);
+        }
 
         $feed->requestAndFilter();// Retrieve feed to update title
 
