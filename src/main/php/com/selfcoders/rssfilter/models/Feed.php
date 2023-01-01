@@ -3,12 +3,13 @@ namespace com\selfcoders\rssfilter\models;
 
 use com\selfcoders\rssfilter\FeedFilter;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass="com\selfcoders\rssfilter\orm\FeedRepository")
  * @ORM\Table(name="feeds")
  */
-class Feed
+class Feed implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -133,5 +134,17 @@ class Feed
     private static function filterArray(array $array): array
     {
         return array_unique(array_filter(array_map("trim", $array)));
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "id" => $this->id,
+            "name" => $this->name,
+            "title" => $this->title,
+            "url" => $this->url,
+            "filters" => $this->getFilters(),
+            "filterIsWhitelist" => $this->filterIsWhitelist
+        ];
     }
 }

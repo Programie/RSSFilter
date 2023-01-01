@@ -12,6 +12,7 @@ $router = new AltoRouter;
 $router->map("GET", "/", "getPage");
 $router->map("GET", "/add-feed", "editFeed");
 $router->map("POST", "/add-feed", "saveFeed");
+$router->map("GET", "/feeds.json", "getFeedsAsJson");
 $router->map("GET", "/feeds/[:name]/edit", "editFeed");
 $router->map("POST", "/feeds/[:name]/edit", "saveFeed");
 $router->map("GET", "/feeds/[:name]", "getFeed");

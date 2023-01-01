@@ -132,4 +132,11 @@ class Controller
 
         return $feed->requestAndFilter(addHeaders: true);
     }
+
+    public function getFeedsAsJson()
+    {
+        $entityManager = Database::getEntityManager();
+
+        return $entityManager->getRepository(Feed::class)->findAll();
+    }
 }
