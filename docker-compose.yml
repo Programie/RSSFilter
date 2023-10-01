@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: registry.gitlab.com/programie/rssfilter
+    image: programie/rssfilter
     build: .
     ports:
       - '8080:80'
