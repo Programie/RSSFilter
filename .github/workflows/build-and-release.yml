@@ -20,3 +20,4 @@ jobs:
       image: programie/rssfilter
       path: /app
       zip_name: RSSFilter
+    secrets: inherit
