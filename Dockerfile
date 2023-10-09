@@ -20,7 +20,7 @@ RUN composer install --no-dev --ignore-platform-reqs && \
     rm /app/composer.json /app/composer.lock
 
 
-FROM php:8.0-apache
+FROM php:8.2-apache
 
 WORKDIR /app
 
