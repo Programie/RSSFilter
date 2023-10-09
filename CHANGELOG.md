@@ -4,6 +4,7 @@
 
 * Warn user about unsaved changes while editing feed
 * Updated dependencies to latest versions
+* Use PHP 8.2 in Docker image
 
 **Note:** Now requires at least PHP 8.1.
 
