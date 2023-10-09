@@ -13,7 +13,7 @@ class Database
         $connection = [
             "driver" => "pdo_mysql",
             "host" => getenv("DATABASE_HOST"),
-            "dbname" => getenv("DATABASE_USERNAME"),
+            "dbname" => getenv("DATABASE_NAME"),
             "user" => getenv("DATABASE_USERNAME"),
             "password" => getenv("DATABASE_PASSWORD")
         ];
