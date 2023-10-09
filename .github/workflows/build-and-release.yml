@@ -19,5 +19,6 @@ jobs:
     with:
       image: programie/rssfilter
       path: /app
+      additional_files: .env.example database.sql
       zip_name: RSSFilter
     secrets: inherit
