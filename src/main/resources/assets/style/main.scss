@@ -11,13 +11,13 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
 // Make form controls dark
 .form-control, .form-control:active, .form-control:focus, .form-control:focus-visible, .form-select {
-  background-color: $gray-700 !important;
-  color: $white;
+    background-color: $gray-700 !important;
+    color: $white;
 }
 
 // White icons on buttons as buttons are dark
 button i.fa-solid {
-  color: $white;
+    color: $white;
 }
 
 // Fix for dark close button on dark modal background
