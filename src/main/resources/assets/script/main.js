@@ -1,6 +1,7 @@
 import "../style/main.scss";
 
 import "bootstrap";
+import "./form-unsaved-confirm";
 
 window.addEventListener("DOMContentLoaded", () => {
     let showUrlModal = document.querySelector("#show-url-modal");
