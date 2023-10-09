@@ -19,3 +19,8 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 button i.fa-solid {
   color: $white;
 }
+
+// Fix for dark close button on dark modal background
+[data-bs-theme="dark"] .btn-close {
+    --bs-btn-close-white-filter: unset;
+}
