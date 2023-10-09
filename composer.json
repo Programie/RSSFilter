@@ -12,7 +12,8 @@
     "doctrine/orm": "^2.10",
     "symfony/asset": "^6.0",
     "twig/html-extra": "^3.3",
-    "doctrine/annotations": "^2.0"
+    "doctrine/annotations": "^2.0",
+    "vlucas/phpdotenv": "^5.5"
   },
   "autoload": {
     "psr-4": {

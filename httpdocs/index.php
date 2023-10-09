@@ -2,10 +2,15 @@
 use com\selfcoders\rssfilter\Controller;
 use com\selfcoders\rssfilter\exception\NotFoundException;
 use com\selfcoders\rssfilter\TwigRenderer;
+use Dotenv\Dotenv;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
 require_once __DIR__ . "/../bootstrap.php";
+
+$dotenv = Dotenv::createUnsafeImmutable(APP_ROOT);
+$dotenv->safeLoad();
+$dotenv->required(["DATABASE_HOST", "DATABASE_NAME", "DATABASE_USERNAME", "DATABASE_PASSWORD"]);
 
 $router = new AltoRouter;
 

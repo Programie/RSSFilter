@@ -4,6 +4,7 @@
 
 * Warn user about unsaved changes while editing feed
 * Fixed incorrectly using environment variable `DATABASE_USERNAME` instead of `DATABASE_NAME` as database name
+* Optionally read configuration from `.env` file in application root
 * Updated dependencies to latest versions
 * Use PHP 8.2 in Docker image
 

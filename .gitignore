@@ -1,4 +1,5 @@
 .idea
+.env
 /httpdocs/assets/
 /node_modules/
 /vendor/
