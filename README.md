@@ -1,4 +1,4 @@
-# RSSFilter
+# RSS Filter
 
 A simple proxy allowing to filter RSS feeds.
 
