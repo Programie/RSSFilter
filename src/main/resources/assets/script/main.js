@@ -2,7 +2,7 @@ import "../style/main.scss";
 
 import "bootstrap";
 
-window.onload = function () {
+window.addEventListener("DOMContentLoaded", () => {
     let showUrlModal = document.querySelector("#show-url-modal");
     if (showUrlModal !== null) {
         showUrlModal.addEventListener("show.bs.modal", function (event) {
@@ -58,4 +58,4 @@ window.onload = function () {
             ajax.send();
         });
     }
-};
+});
