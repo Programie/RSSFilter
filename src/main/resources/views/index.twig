@@ -21,9 +21,9 @@
                     <td>{{ feed.filters|length }}</td>
                     <th>
                         <div class="btn-group btn-group-sm">
-                            <button class="btn btn-primary show-url" data-bs-toggle="modal" data-bs-target="#show-url-modal" title="Show URL of feed"><i class="fas fa-globe"></i></button>
-                            <a href="/feeds/{{ feed.name }}/edit" class="btn btn-primary" title="Edit feed"><i class="fas fa-edit"></i></a>
-                            <button class="btn btn-danger remove-feed" data-bs-toggle="modal" data-bs-target="#remove-feed-modal" title="Remove feed"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-primary show-url" data-bs-toggle="modal" data-bs-target="#show-url-modal" title="Show URL of feed"><i class="fa-solid fa-globe"></i></button>
+                            <a href="/feeds/{{ feed.name }}/edit" class="btn btn-primary" title="Edit feed"><i class="fa-solid fa-edit"></i></a>
+                            <button class="btn btn-danger remove-feed" data-bs-toggle="modal" data-bs-target="#remove-feed-modal" title="Remove feed"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </th>
                 </tr>
@@ -36,7 +36,7 @@
     </table>
 
     <div class="">
-        <a href="/add-feed" class="btn btn-primary"><i class="fas fa-plus-square"></i> Add feed</a>
+        <a href="/add-feed" class="btn btn-primary"><i class="fa-solid fa-plus-square"></i> Add feed</a>
     </div>
 
     <div class="modal fade" tabindex="-1" id="show-url-modal">
@@ -49,11 +49,11 @@
                 <div class="modal-body">
                     <div class="input-group mb-3">
                         <input type="url" class="form-control" id="show-url-modal-url" readonly/>
-                        <button class="btn btn-outline-secondary" id="show-url-modal-copy"><i class="fas fa-copy"></i></button>
+                        <button class="btn btn-outline-secondary" id="show-url-modal-copy"><i class="fa-solid fa-copy"></i></button>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-window-close"></i> Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
                 </div>
             </div>
         </div>
@@ -70,8 +70,8 @@
                     <p>Are you sure to <b>remove</b> the feed <b class="remove-feed-modal-feed"></b>?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="remove-feed-modal-confirm"><i class="fas fa-trash"></i> Remove</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fas fa-window-close"></i> Cancel</button>
+                    <button type="button" class="btn btn-danger" id="remove-feed-modal-confirm"><i class="fa-solid fa-trash"></i> Remove</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Cancel</button>
                 </div>
             </div>
         </div>
