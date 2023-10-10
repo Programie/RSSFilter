@@ -12,12 +12,10 @@ RUN npm run build
 
 FROM composer AS composer
 
-COPY composer.* /app/
-
 WORKDIR /app
 
-RUN composer install --no-dev --ignore-platform-reqs && \
-    rm /app/composer.json /app/composer.lock
+COPY composer.* /app/
+RUN composer install --no-dev --ignore-platform-reqs
 
 
 FROM php:8.2-apache
