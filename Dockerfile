@@ -24,7 +24,7 @@ ENV WEB_ROOT=/app/httpdocs
 
 WORKDIR /app
 
-RUN install-php 8.2 dom intl pdo-mysql && \
+RUN install-php 8.2 dom pdo-mysql && \
     a2enmod rewrite
 
 COPY --from=composer /app/vendor /app/vendor
