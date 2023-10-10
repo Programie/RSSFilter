@@ -18,18 +18,14 @@ COPY composer.* /app/
 RUN composer install --no-dev --ignore-platform-reqs
 
 
-FROM php:8.2-apache
+FROM ghcr.io/programie/dockerimages/php
+
+ENV WEB_ROOT=/app/httpdocs
 
 WORKDIR /app
 
-RUN sed -ri -e 's!/var/www/html!/app/httpdocs!g' /etc/apache2/sites-available/*.conf && \
-    sed -ri -e 's!/var/www/!/app/httpdocs!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf && \
-    echo "ServerTokens Prod" > /etc/apache2/conf-enabled/z-server-tokens.conf && \
-    a2enmod rewrite && \
-    apt-get -y update && \
-    apt-get install -y libicu-dev gosu && \
-    docker-php-ext-install intl pdo_mysql && \
-    mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+RUN install-php 8.2 dom intl pdo-mysql && \
+    a2enmod rewrite
 
 COPY --from=composer /app/vendor /app/vendor
 COPY --from=webpack /app/httpdocs/assets /app/httpdocs/assets
