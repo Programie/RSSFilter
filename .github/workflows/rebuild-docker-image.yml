@@ -2,12 +2,15 @@ name: Rebuild Docker image from latest release
 
 on:
   schedule:
-    - cron: '0 0 * * SUN'
+    - cron: '0 10 * * SUN'
+
+permissions:
+  packages: write
 
 jobs:
   build:
     uses: programie/Workflows/.github/workflows/build-docker-image.yml@main
     with:
-      image: programie/rssfilter
+      dockerhub_image: programie/rssfilter
       use_latest_release: true
     secrets: inherit
