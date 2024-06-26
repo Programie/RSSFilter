@@ -102,7 +102,7 @@ class Feed implements JsonSerializable
         return $this;
     }
 
-    public function requestAndFilter(bool $addHeaders = false): string
+    public function requestAndFilter(bool $addHeaders = false, string $selfUrl = null): string
     {
         $feedFilter = new FeedFilter;
 
@@ -112,7 +112,7 @@ class Feed implements JsonSerializable
             $feedFilter->addFilter($filter);
         }
 
-        $feedContent = $feedFilter->filterUrl($this->getUrl());
+        $feedContent = $feedFilter->filterUrl($this->getUrl(), $selfUrl);
 
         $this->setTitle($feedFilter->getTitle());
 

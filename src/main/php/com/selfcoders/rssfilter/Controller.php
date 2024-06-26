@@ -130,7 +130,7 @@ class Controller
             throw new NotFoundException;
         }
 
-        return $feed->requestAndFilter(addHeaders: true);
+        return $feed->requestAndFilter(addHeaders: true, selfUrl: sprintf("%s/feeds/%s", getenv("APP_URL"), $feed->getName()));
     }
 
     public function getFeedsAsJson()

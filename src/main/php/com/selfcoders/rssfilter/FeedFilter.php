@@ -24,7 +24,7 @@ class FeedFilter
         $this->filterStrings[] = $filterString;
     }
 
-    public function filterUrl(string $url): string
+    public function filterUrl(string $url, string $selfUrl = null): string
     {
         $client = new Client([
             RequestOptions::TIMEOUT => 5,
@@ -33,10 +33,10 @@ class FeedFilter
 
         $this->response = $client->get($url);
 
-        return $this->filterContent($this->response->getBody()->getContents());
+        return $this->filterContent($this->response->getBody()->getContents(), $selfUrl);
     }
 
-    public function filterContent(string $content): string
+    public function filterContent(string $content, string $selfUrl = null): string
     {
         $document = new DOMDocument;
         $document->loadXML($content);
@@ -45,6 +45,29 @@ class FeedFilter
          * @var $rootElement DOMElement
          */
         $rootElement = $document->documentElement;
+
+        if ($selfUrl !== null) {
+            $selfLinkElement = null;
+
+            /**
+             * @var DOMElement $linkElement
+             */
+            foreach ($rootElement->getElementsByTagName("link") as $linkElement) {
+                if ($linkElement->getAttribute("rel") === "self") {
+                    $selfLinkElement = $linkElement;
+                    break;
+                }
+            }
+
+            if ($selfLinkElement === null) {
+                $selfLinkElement = new DOMElement("link");
+                $selfLinkElement->setAttribute("rel", "self");
+                $selfLinkElement->setAttribute("type", "application/atom+xml");
+                $rootElement->appendChild($selfLinkElement);
+            }
+
+            $selfLinkElement->setAttribute("href", $selfUrl);
+        }
 
         $elementsToRemove = [];
 

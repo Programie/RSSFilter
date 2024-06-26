@@ -13,6 +13,7 @@ services:
       DATABASE_NAME: rssfilter
       DATABASE_USERNAME: rssfilter
       DATABASE_PASSWORD: rssfilter
+      APP_URL: 'http://localhost:8080'
 
   mysql:
     image: mariadb
